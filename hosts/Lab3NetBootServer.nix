@@ -1,4 +1,4 @@
-{ config, pkgs, lib, self, uboot-builder, ... }:
+{ config, pkgs, lib, self, uboot-builder, packages, ... }:
 
 {
   imports = [
