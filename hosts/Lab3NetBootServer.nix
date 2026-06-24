@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, self, ... }:
 
 {
   imports = [
@@ -120,6 +120,26 @@
     root = "/var/lib/tftpboot";
     extraOptions = [ "--verbose" ];
   };
+
+  system.activationScripts.deployNetbootFiles = {
+      # Ensure this runs after the file systems are mounted
+      deps = [ "users" ]; 
+      text = ''
+        echo "Deploying netboot files to /var/lib/tftpboot..."
+        
+        # Ensure the destination directory exists
+        mkdir -p /var/lib/tftpboot/overlays
+        
+        # Copy files from the specific flake package output
+        # Replace 'image-rpi4-5' with the name defined in your flake
+        cp ${self.packages.x86_64-linux.image-rpi4-5}/stage/* /var/lib/tftpboot/
+        cp -r ${self.packages.x86_64-linux.image-rpi4-5}/stage/overlays/* /var/lib/tftpboot/overlays/
+        
+        # Fix permissions so atftpd can read them
+        chown -R atftpd:atftpd /var/lib/tftpboot
+        chmod -R 755 /var/lib/tftpboot
+      '';
+    };
 
   cluster.netboot.rootDir = "/export";
 
