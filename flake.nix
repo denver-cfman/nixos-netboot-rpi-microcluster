@@ -28,6 +28,7 @@
         configTxt = "kernel=kernel.img"; 
         bootCmd = ./boot.cmd; 
       };
+    };
     nixosConfigurations = {
       lab3netbootserver = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit self uboot-builder; };
