@@ -118,7 +118,8 @@
   services.tftpd = {
     enable = true;
     path = "/var/lib/tftpboot"; # Or your custom path
-    extraOptions = [ "--verbose" "--secure" ];
+    #extraOptions = [ "--verbose" "--secure" ];
+    extraConfig = "--verbose --secure";
   };
 
   cluster.netboot.rootDir = "/export";
