@@ -113,6 +113,8 @@
 
   services.openssh.enable = true;
 
+  system.stateVersion = "26.11";
+
   cluster.netboot.rootDir = "/export";
 
   systemd.tmpfiles.rules = [
