@@ -1,20 +1,26 @@
-# modules/netboot-server.nix
-{ config, pkgs, ... }: {
-  services.dnsmasq = {
-    enable = true;
-    extraConfig = ''
-      # Match PI by MAC to specific PXE configuration
-      dhcp-host=dc:a6:32:xx:xx:xx,192.168.1.10,client-01
-      enable-tftp
-      tftp-root=/var/lib/tftpboot
-      pxe-service=0,"Raspberry Pi",boot.scr
-    '';
+{ config, lib, pkgs, ... }:
+
+{
+  options.cluster.netboot = {
+    rootDir = lib.mkOption { type = lib.types.str; default = "/export"; };
   };
 
-  services.nfs.server = {
-    enable = true;
-    exports = ''
-      /export/client-01 192.168.1.10(rw,no_root_squash,no_subtree_check,sync)
-    '';
+  config = {
+    # TFTP Service
+    services.atftpd = {
+      enable = true;
+      root = "/var/lib/tftpboot";
+    };
+
+    # NFS Server
+    services.nfs.server = {
+      enable = true;
+      exports = ''
+        ${config.cluster.netboot.rootDir} 192.168.1.0/24(rw,no_root_squash,no_subtree_check,sync)
+      '';
+    };
+
+    networking.firewall.allowedUDPPorts = [ 69 111 2049 ];
+    networking.firewall.allowedTCPPorts = [ 111 2049 ];
   };
 }
