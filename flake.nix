@@ -10,7 +10,10 @@
       # The Netboot Server
       netboot-server = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./hosts/netboot-server.nix ];
+        modules = [ 
+          ./hosts/netboot-server.nix
+          ./modules/netboot-infrastructure.nix
+        ];
       };
       
       # The First Client
