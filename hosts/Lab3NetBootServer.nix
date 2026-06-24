@@ -115,11 +115,10 @@
 
   system.stateVersion = "26.11";
 
-  services.tftpd = {
+  services.atftpd = {
     enable = true;
-    path = "/var/lib/tftpboot"; # Or your custom path
-    #extraOptions = [ "--verbose" "--secure" ];
-    extraConfig = "--verbose --secure";
+    root = "/var/lib/tftpboot";
+    extraOptions = [ "--verbose" "--secure" ];
   };
 
   cluster.netboot.rootDir = "/export";
