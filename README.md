@@ -4,5 +4,5 @@
 
 ## Build the Netboot Server
 ```bash
-nix run github:nix-community/nixos-anywhere -- --flake 'github:denver-cfman/nixos-netboot-rpi-microcluster?ref=main#lab3netbootserver' --target-host nixos@10.0.85.186
+nix run github:nix-community/nixos-anywhere -- --flake 'github:denver-cfman/nixos-netboot-rpi-microcluster?ref=main#lab3netbootserver' --target-host nixos@10.0.83.20
 ```
