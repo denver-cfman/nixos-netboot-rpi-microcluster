@@ -1,4 +1,4 @@
-{ config, pkgs, lib, self, ... }:
+{ config, pkgs, lib, self, uboot-builder, ... }:
 
 {
   imports = [
@@ -129,8 +129,8 @@
         
         mkdir -p /var/lib/tftpboot/overlays
         
-        cp ${self.packages.x86_64-linux.image-rpi4-5}/stage/* /var/lib/tftpboot/
-        cp -r ${self.packages.x86_64-linux.image-rpi4-5}/stage/overlays/* /var/lib/tftpboot/overlays/
+        cp ${uboot-builder.packages.x86_64-linux.image-rpi4-5}/stage/* /var/lib/tftpboot/
+        cp -r ${uboot-builder.packages.x86_64-linux.image-rpi4-5}/stage/overlays/* /var/lib/tftpboot/overlays/
         
         chown -R atftpd:atftpd /var/lib/tftpboot
         chmod -R 755 /var/lib/tftpboot
