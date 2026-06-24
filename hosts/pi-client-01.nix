@@ -18,9 +18,6 @@
     timeout = 2;
   };
 
-  boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
-
   networking = {
     hostName = "pi-client-01";
     networkmanager = {
