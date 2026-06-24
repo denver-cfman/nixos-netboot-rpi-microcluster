@@ -115,6 +115,12 @@
 
   system.stateVersion = "26.11";
 
+  services.tftpd = {
+    enable = true;
+    path = "/var/lib/tftpboot"; # Or your custom path
+    extraOptions = [ "--verbose" "--secure" ];
+  };
+
   cluster.netboot.rootDir = "/export";
 
   systemd.tmpfiles.rules = [
