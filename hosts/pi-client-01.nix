@@ -13,16 +13,9 @@
   ];
 
   boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
-  
-    # Enable Legacy GRUB
-    grub = {
-      enable = false;
-      #device = "/dev/sda"; # The actual disk, NOT a partition
-      #forceInstall = true;
-      #useOSProber = false; # Set to true only if dual booting
-    };
+    grub.enable = false;
+    generic-extlinux-compatible.enable = true;
+    timeout = 2;
   };
 
   networking = {
