@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../modules/netboot-infrastructure.nix ];
+  imports = [
+    ./uefi_disko.nix
+    ../modules/netboot-infrastructure.nix
+  ];
 
   cluster.netboot.rootDir = "/export";
 
