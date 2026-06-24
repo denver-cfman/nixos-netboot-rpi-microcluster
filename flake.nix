@@ -1,8 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Point to your existing U-Boot flake here
-    uboot-builder.url = "path:./uboot-repo"; 
+    uboot-builder.url = "github:denver-cfman/nixos-netboot-cluster-uboot"; 
   };
 
   outputs = { self, nixpkgs, uboot-builder }: {
