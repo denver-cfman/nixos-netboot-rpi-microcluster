@@ -1,12 +1,14 @@
-# modules/netboot-client.nix
 { config, lib, ... }: {
-  fileSystems."/" = {
-    device = "192.168.1.5:/export/client-01";
-    fsType = "nfs";
-    options = [ "vers=4.2" "proto=tcp" "timeo=600" ];
-  };
-  
-  # Ensure the kernel has NFS support built-in
+  # This makes the client look for the NFS root
   boot.initrd.supportedFilesystems = [ "nfs" ];
-  boot.kernelParams = [ "nfsroot=192.168.1.5:/export/client-01" "ip=dhcp" ];
+  boot.kernelParams = [ 
+    "ip=dhcp" 
+    "nfsroot=192.168.1.5:/export/pi-client-01,vers=4.2,proto=tcp" 
+  ];
+
+  fileSystems."/" = {
+    device = "192.168.1.5:/export/pi-client-01";
+    fsType = "nfs";
+    options = [ "vers=4.2" "proto=tcp" ];
+  };
 }
