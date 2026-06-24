@@ -20,6 +20,7 @@
   outputs = { self, nixpkgs, uboot-builder, disko, sops-nix, home-manager }: {
     nixosConfigurations = {
       lab3netbootserver = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit self; };
         system = "x86_64-linux";
         modules = [
           disko.nixosModules.disko
@@ -29,6 +30,7 @@
         ];
       };
       pi-client-01 = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit self; };
         system = "aarch64-linux";
         modules = [
           ./hosts/pi-client-01.nix
