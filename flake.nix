@@ -24,7 +24,6 @@
         modules = [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
-          hermes-agent.nixosModules.default
           ./hosts/Lab3NetBootServer.nix
           ./modules/netboot-infrastructure.nix
         ];
