@@ -18,6 +18,16 @@
   };
 
   outputs = { self, nixpkgs, uboot-builder, disko, sops-nix, home-manager }: {
+    packages.x86_64-linux = let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      # Import your new file
+      builder = import ./modules/netboot-builder.nix { inherit pkgs; };
+    in {
+      firmware-rpi4 = builder.mkNetbootFirmware { 
+        uboot = pkgs.ubootRaspberryPi4_64bit; # Example usage
+        configTxt = "kernel=kernel.img"; 
+        bootCmd = ./boot.cmd; 
+      };
     nixosConfigurations = {
       lab3netbootserver = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit self uboot-builder; };
