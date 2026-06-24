@@ -16,7 +16,7 @@
     services.nfs.server = {
       enable = true;
       exports = ''
-        ${config.cluster.netboot.rootDir} 192.168.1.0/24(rw,no_root_squash,no_subtree_check,sync)
+        ${config.cluster.netboot.rootDir} 10.0.83.0/24(rw,no_root_squash,no_subtree_check,sync)
       '';
     };
 
