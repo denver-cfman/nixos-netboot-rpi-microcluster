@@ -19,13 +19,13 @@
 
   outputs = { self, nixpkgs, uboot-builder, disko, sops-nix, home-manager }: {
     nixosConfigurations = {
-      netboot-server = nixpkgs.lib.nixosSystem {
+      lab3netbootserver = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           hermes-agent.nixosModules.default
-          ./hosts/netboot-server.nix
+          ./hosts/Lab3NetBootServer.nix
           ./modules/netboot-infrastructure.nix
         ];
       };
