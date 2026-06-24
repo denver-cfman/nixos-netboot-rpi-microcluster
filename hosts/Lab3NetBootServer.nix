@@ -126,13 +126,14 @@
       deps = [ "users" ]; 
       text = ''
         echo "Deploying netboot files to /var/lib/tftpboot..."
-        
         mkdir -p /var/lib/tftpboot/overlays
         
-        cp ${uboot-builder.packages.x86_64-linux.image-rpi4-5}/stage/* /var/lib/tftpboot/
-        cp -r ${uboot-builder.packages.x86_64-linux.image-rpi4-5}/stage/overlays/* /var/lib/tftpboot/overlays/
+        # Copy directly from the package output
+        cp ${image-builder.packages.x86_64-linux.image-rpi4-5}/* /var/lib/tftpboot/
+        cp -r ${image-builder.packages.x86_64-linux.image-rpi4-5}/overlays/* /var/lib/tftpboot/overlays/
         
-        chown -R atftpd:atftpd /var/lib/tftpboot
+        # Set permissions to root instead of atftpd
+        chown -R root:root /var/lib/tftpboot
         chmod -R 755 /var/lib/tftpboot
       '';
     };
