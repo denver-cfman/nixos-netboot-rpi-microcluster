@@ -107,6 +107,18 @@
     screen
   ];
 
+  boot.binfmt.emulatedSystems = [ 
+    "aarch64-linux"
+    "armv6l-linux"
+    "armv7l-linux"
+    "i386-linux"
+    "i486-linux"
+    "i586-linux"
+    "i686-linux"
+    "wasm32-wasi"
+    "wasm64-wasi"
+  ];
+
   nix.gc = {
     automatic = true;
     randomizedDelaySec = "5min";
