@@ -87,6 +87,7 @@
   systemd.services."serial-getty@ttyS0".enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
