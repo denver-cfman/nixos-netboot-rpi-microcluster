@@ -24,9 +24,10 @@
       builder = import ./modules/netboot-builder.nix { inherit pkgs; };
     in {
       firmware-rpi4 = builder.mkNetbootFirmware { 
-        uboot = pkgs.ubootRaspberryPi4_64bit; # Example usage
+        uboot = pkgs.ubootRaspberryPi4_64bit;
         configTxt = "kernel=kernel.img"; 
-        bootCmd = ./boot.cmd; 
+        # Change this to use the 'self' input to find the file
+        bootCmd = "${self}/boot.cmd"; 
       };
     };
     nixosConfigurations = {
