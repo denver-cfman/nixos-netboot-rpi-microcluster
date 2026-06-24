@@ -129,8 +129,8 @@
         mkdir -p /var/lib/tftpboot/overlays
         
         # Copy directly from the package output
-        cp ${image-builder.packages.x86_64-linux.image-rpi4-5}/* /var/lib/tftpboot/
-        cp -r ${image-builder.packages.x86_64-linux.image-rpi4-5}/overlays/* /var/lib/tftpboot/overlays/
+        cp ${uboot-builder.packages.x86_64-linux.image-rpi4-5}/* /var/lib/tftpboot/
+        cp -r ${uboot-builder.packages.x86_64-linux.image-rpi4-5}/overlays/* /var/lib/tftpboot/overlays/
         
         # Set permissions to root instead of atftpd
         chown -R root:root /var/lib/tftpboot
