@@ -118,7 +118,7 @@
   services.atftpd = {
     enable = true;
     root = "/var/lib/tftpboot";
-    extraOptions = [ "--verbose" "--secure" ];
+    extraOptions = [ "--verbose" ];
   };
 
   cluster.netboot.rootDir = "/export";
