@@ -1,6 +1,11 @@
 #    nixos-netboot-rpi-microcluster
 
 ---
+## valadate flake
+```bash
+nix flake check -v -L --no-build --no-write-lock-file --all-systems github:denver-cfman/nixos-netboot-rpi-microcluster?ref=main
+```
+
 
 ## Build the Netboot Server
 ```bash
