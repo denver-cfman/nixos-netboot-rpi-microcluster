@@ -30,7 +30,10 @@
       };
       pi-client-01 = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        modules = [ ./modules/netboot-client.nix ];
+        modules = [
+          ./hosts/pi-client-01.nix
+          ./modules/netboot-client.nix
+        ];
       };
     };
   };
