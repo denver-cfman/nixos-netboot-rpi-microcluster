@@ -2,8 +2,7 @@
 
 {
   imports = [
-    ./uefi_disko.nix
-    ../modules/netboot-infrastructure.nix
+    ../modules/netboot-client.nix
   ];
 
   boot.kernelParams = [
