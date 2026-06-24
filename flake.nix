@@ -7,7 +7,6 @@
 
   outputs = { self, nixpkgs, uboot-builder }: {
     nixosConfigurations = {
-      # The Netboot Server
       netboot-server = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [ 
@@ -15,8 +14,6 @@
           ./modules/netboot-infrastructure.nix
         ];
       };
-      
-      # The First Client
       pi-client-01 = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [ ./hosts/pi-client-01.nix ];
