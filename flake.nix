@@ -31,7 +31,7 @@
     };
     nixosConfigurations = {
       lab3netbootserver = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit self uboot-builder; };
+        specialArgs = { inherit self uboot-builder; packages = self.packages.x86_64-linux; };
         system = "x86_64-linux";
         modules = [
           disko.nixosModules.disko
@@ -41,7 +41,7 @@
         ];
       };
       pi-client-01 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit self uboot-builder; };
+        specialArgs = { inherit self uboot-builder; packages = self.packages.x86_64-linux; };
         system = "aarch64-linux";
         modules = [
           ./hosts/pi-client-01.nix
