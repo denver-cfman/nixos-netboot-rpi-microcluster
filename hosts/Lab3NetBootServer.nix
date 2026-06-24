@@ -128,10 +128,9 @@
         echo "Deploying netboot files to /var/lib/tftpboot..."
         mkdir -p /var/lib/tftpboot/overlays
         
-        # Copy directly from the package output
-        cp ${uboot-builder.packages.x86_64-linux.image-rpi4-5}/* /var/lib/tftpboot/
-        cp -r ${uboot-builder.packages.x86_64-linux.image-rpi4-5}/overlays/* /var/lib/tftpboot/overlays/
-        
+        # Reference the new package name
+        cp ${packages.firmware-rpi4}/* /var/lib/tftpboot/
+  
         # Set permissions to root instead of atftpd
         chown -R root:root /var/lib/tftpboot
         chmod -R 755 /var/lib/tftpboot
