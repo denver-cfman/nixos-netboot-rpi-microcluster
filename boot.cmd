@@ -1,29 +1,22 @@
-# 1. Wait for USB/Ethernet hardware to stabilize
-echo "--- Initializing Hardware ---"
-sleep 5
+# 1. Force the Pi to use our settings, bypassing automatic PXE/distro discovery
+echo "--- Starting Custom Netboot ---"
+setenv ethact asix_eth
+setenv ipaddr 10.0.83.221
+setenv serverip 10.0.83.20
 
-# 2. Configure Network
-echo "--- Configuring Network ---"
-dhcp
-# Ensure we use the detected USB Ethernet device
-setenv ethact asix_eth0
-
-# 3. Define path variables
-# Ensure these filenames match the files in your /var/lib/tftpboot/
+# 2. Correct the device tree path
 setenv fdtfile bcm2710-rpi-zero-2.dtb
-setenv kernel_file kernel.img
 
-# 4. Load files into memory
-echo "--- Loading Boot Files ---"
+# 3. Explicitly load files from the root TFTP directory
+echo "--- Loading kernel and device tree ---"
 tftpboot ${fdt_addr_r} ${fdtfile}
-tftpboot ${kernel_addr_r} ${kernel_file}
+tftpboot ${kernel_addr_r} kernel.img
 
-# 5. Set Kernel Arguments
-# root=/dev/nfs is required for network booting
+# 4. Define Kernel Arguments for NFS root
 setenv bootargs "console=ttyS0,115200n8 root=/dev/nfs nfsroot=${serverip}:/export/rootfs,vers=3 rw ip=dhcp"
 
-# 6. Execute Boot
-# Use 'booti' for ARM64 Linux kernels. 
-# The '-' parameter is for the ramdisk (none in this case).
-echo "--- Booting Kernel ---"
+# 5. Boot using the proper command for a standard Image/kernel file
+# If your kernel.img is a U-Boot wrapped image, use 'bootm'. 
+# If it is a raw Linux kernel (Image), use 'booti'.
+echo "--- Booting kernel ---"
 booti ${kernel_addr_r} - ${fdt_addr_r}
