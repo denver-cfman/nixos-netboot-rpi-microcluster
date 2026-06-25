@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, self, uboot-builder, packages, ... }:
 
 {
   imports = [
@@ -87,6 +87,7 @@
   systemd.services."serial-getty@ttyS0".enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -106,6 +107,18 @@
     screen
   ];
 
+  boot.binfmt.emulatedSystems = [ 
+    "aarch64-linux"
+    "armv6l-linux"
+    "armv7l-linux"
+    "i386-linux"
+    "i486-linux"
+    "i586-linux"
+    "i686-linux"
+    "wasm32-wasi"
+    "wasm64-wasi"
+  ];
+
   nix.gc = {
     automatic = true;
     randomizedDelaySec = "5min";
@@ -114,6 +127,28 @@
   services.openssh.enable = true;
 
   system.stateVersion = "26.11";
+
+  services.atftpd = {
+    enable = true;
+    root = "/var/lib/tftpboot";
+    extraOptions = [ "--verbose" ];
+  };
+
+  system.activationScripts.deployNetbootFiles = {
+      # Ensure this runs after the file systems are mounted
+      deps = [ "users" ]; 
+      text = ''
+        echo "Deploying netboot files to /var/lib/tftpboot..."
+        mkdir -p /var/lib/tftpboot/overlays
+        
+        # Use -r to recursively copy everything from the firmware package
+        cp -r ${packages.firmware-rpi4}/* /var/lib/tftpboot/
+        
+        # Set permissions to root
+        chown -R root:root /var/lib/tftpboot
+        chmod -R 755 /var/lib/tftpboot
+      '';
+    };
 
   cluster.netboot.rootDir = "/export";
 
