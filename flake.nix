@@ -19,16 +19,16 @@
 
   outputs = { self, nixpkgs, uboot-builder, disko, sops-nix, home-manager }: {
     packages.x86_64-linux = let
-      # Add configuration here to allow cross-platform packages
-      pkgs = import nixpkgs { 
-        system = "x86_64-linux";
-        config.allowUnsupportedSystem = true; 
-      };
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
       
-      builder = import ./modules/netboot-builder.nix { inherit pkgs; };
+      # Use a cross-compilation package set for ARM
+      pkgsCross = pkgs.pkgsCross.aarch64-multiplatform;
+      
+      # Pass the CROSS compiler tools to the builder
+      builder = import ./modules/netboot-builder.nix { pkgs = pkgsCross; };
     in {
       firmware-rpi4 = builder.mkNetbootFirmware { 
-        uboot = pkgs.ubootRaspberryPi4_64bit;
+        uboot = pkgsCross.ubootRaspberryPi4_64bit;
         configTxt = "kernel=kernel.img"; 
         bootCmd = "${self}/boot.cmd";
       };
