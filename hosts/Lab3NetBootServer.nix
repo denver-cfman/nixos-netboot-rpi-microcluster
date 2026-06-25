@@ -141,10 +141,10 @@
         echo "Deploying netboot files to /var/lib/tftpboot..."
         mkdir -p /var/lib/tftpboot/overlays
         
-        # Reference the new package name
-        cp ${packages.firmware-rpi4}/* /var/lib/tftpboot/
-  
-        # Set permissions to root instead of atftpd
+        # Use -r to recursively copy everything from the firmware package
+        cp -r ${packages.firmware-rpi4}/* /var/lib/tftpboot/
+        
+        # Set permissions to root
         chown -R root:root /var/lib/tftpboot
         chmod -R 755 /var/lib/tftpboot
       '';
