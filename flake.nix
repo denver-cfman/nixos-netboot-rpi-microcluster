@@ -19,15 +19,18 @@
 
   outputs = { self, nixpkgs, uboot-builder, disko, sops-nix, home-manager }: {
     packages.x86_64-linux = let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      # Import your new file
+      # Add configuration here to allow cross-platform packages
+      pkgs = import nixpkgs { 
+        system = "x86_64-linux";
+        config.allowUnsupportedSystem = true; 
+      };
+      
       builder = import ./modules/netboot-builder.nix { inherit pkgs; };
     in {
       firmware-rpi4 = builder.mkNetbootFirmware { 
         uboot = pkgs.ubootRaspberryPi4_64bit;
         configTxt = "kernel=kernel.img"; 
-        # Change this to use the 'self' input to find the file
-        bootCmd = "${self}/boot.cmd"; 
+        bootCmd = "${self}/boot.cmd";
       };
     };
     nixosConfigurations = {
